@@ -1,5 +1,0 @@
-2024-05-20 23:12:05.094 | WARNING  | qlib.tests.data:qlib_data:175 - Data already exists: ~/.qlib/qlib_data/cn_data, the data download will be skipped
-	If downloading is required: `exists_skip=False` or `change target_dir`
-[28102:MainThread](2024-05-20 23:12:05,095) INFO - qlib.Initialization - [config.py:416] - default_conf: client.
-[28102:MainThread](2024-05-20 23:12:05,102) INFO - qlib.Initialization - [__init__.py:74] - qlib successfully initialized based on client settings.
-[28102:MainThread](2024-05-20 23:12:05,102) INFO - qlib.Initialization - [__init__.py:76] - data_path={'__DEFAULT_FREQ': PosixPath('/Users/leo/.qlib/qlib_data/cn_data')}
