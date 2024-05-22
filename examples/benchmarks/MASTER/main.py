@@ -71,7 +71,7 @@ if __name__ == "__main__":
         ]
     }
 
-    for seed in range(0, 1):
+    for seed in range(1, 6):
         print("------------------------")
         print(f"seed: {seed}")
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
         else:
             model.load_model(f"./model/{config['market']}master_{seed}.pkl")
             predictions = model.predict(dataset=dataset)
-            predictions.to_csv("./logs/pred.csv")
+            predictions.to_csv(f"./logs/pred{seed}.csv")
 
         with R.start(experiment_name=f"workflow_seed{seed}"):
             # prediction
