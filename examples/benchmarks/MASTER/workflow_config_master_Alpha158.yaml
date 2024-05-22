@@ -4,19 +4,12 @@ qlib_init:
 market: &market csi300
 benchmark: &benchmark SH000300
 data_handler_config: &data_handler_config
-    start_time: 2008-01-01
+    start_time: 2005-01-01
     end_time: 2024-05-20
-    fit_start_time: 2008-01-01
+    fit_start_time: 2005-01-01
     fit_end_time: 2022-12-31
     instruments: *market
     infer_processors:
-        - class: FilterCol
-          kwargs:
-              fields_group: feature
-              col_list: ["RESI5", "WVMA5", "RSQR5", "KLEN", "RSQR10", "CORR5", "CORD5", "CORR10", 
-                            "ROC60", "RESI10", "VSTD5", "RSQR60", "CORR60", "WVMA60", "STD5", 
-                            "RSQR20", "CORD60", "CORD10", "CORR20", "KLOW"
-                        ]
         - class: RobustZScoreNorm
           kwargs:
               fields_group: feature
@@ -29,8 +22,21 @@ data_handler_config: &data_handler_config
         - class: CSRankNorm
           kwargs:
               fields_group: label
-    label: ["Ref($close, -2) / Ref($close, -1) - 1"] 
-
+    label: ["Ref($close, -5) / Ref($close, -1) - 1"] 
+market_data_handler_config: &market_data_handler_config
+    start_time: 2005-01-01
+    end_time: 2024-05-20
+    fit_start_time: 2005-01-01
+    fit_end_time: 2022-12-31
+    instruments: *market
+    infer_processors:
+        - class: RobustZScoreNorm
+          kwargs:
+              fields_group: feature
+              clip_outlier: true
+        - class: Fillna
+          kwargs:
+              fields_group: feature
 port_analysis_config: &port_analysis_config
     executor:
             class: SimulatorExecutor
@@ -43,50 +49,41 @@ port_analysis_config: &port_analysis_config
         module_path: qlib.contrib.strategy
         kwargs:
             signal: <PRED>
-            topk: 50
-            n_drop: 5
+            topk: 20
+            n_drop: 20
     backtest:
-        start_time: 2023-07-31
+        start_time: 2024-01-01
         end_time: 2024-04-30
         account: 100000000
         benchmark: *benchmark
         exchange_kwargs:
-            limit_threshold: 0.095
             deal_price: close
-            open_cost: 0.0005
-            close_cost: 0.0015
-            min_cost: 5
 task:
     model:
-        class: ALSTM
-        module_path: qlib.contrib.model.pytorch_alstm_ts
+        class: MASTERModel
+        module_path: qlib.contrib.model.pytorch_master_ts
         kwargs:
-            d_feat: 20
-            hidden_size: 64
-            num_layers: 2
-            dropout: 0.0
-            n_epochs: 200
-            lr: 1e-3
-            early_stop: 10
-            batch_size: 800
-            metric: loss
-            loss: mse
-            n_jobs: 20
-            GPU: 0
-            rnn_type: GRU
+            seed: 0
+            n_epochs: 40
+            lr: 0.000008
+            train_stop_loss_thred: 0.85
+            market: *market
+            benchmark: *benchmark
+            save_prefix: *market
     dataset:
-        class: TSDatasetH
-        module_path: qlib.data.dataset
+        class: MASTERTSDatasetH
+        module_path: qlib.contrib.data.master_dataset
         kwargs:
             handler:
                 class: Alpha158
                 module_path: qlib.contrib.data.handler
                 kwargs: *data_handler_config
             segments:
-                train: [2008-01-01, 2022-12-31]
+                train: [2005-01-01, 2022-12-31]
                 valid: [2023-01-01, 2023-12-31]
                 test: [2024-01-01, 2024-05-20]
             step_len: 20
+            market_data_handler_config: *market_data_handler_config
     record: 
         - class: SignalRecord
           module_path: qlib.workflow.record_temp
@@ -102,3 +99,4 @@ task:
           module_path: qlib.workflow.record_temp
           kwargs: 
             config: *port_analysis_config
+

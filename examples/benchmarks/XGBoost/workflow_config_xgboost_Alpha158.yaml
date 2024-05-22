@@ -5,21 +5,27 @@ market: &market csi300
 benchmark: &benchmark SH000300
 data_handler_config: &data_handler_config
     start_time: 2008-01-01
-    end_time: 2020-08-01
+    end_time: 2024-05-20
     fit_start_time: 2008-01-01
-    fit_end_time: 2014-12-31
+    fit_end_time: 2022-12-31
     instruments: *market
 port_analysis_config: &port_analysis_config
+    executor:
+            class: SimulatorExecutor
+            module_path: qlib.backtest.executor
+            kwargs:
+                time_per_step: week
+                generate_portfolio_metrics: true
     strategy:
         class: TopkDropoutStrategy
         module_path: qlib.contrib.strategy
         kwargs:
             signal: <PRED>
-            topk: 50
+            topk: 20
             n_drop: 5
     backtest:
-        start_time: 2017-01-01
-        end_time: 2020-08-01
+        start_time: 2023-07-31
+        end_time: 2024-04-30
         account: 100000000
         benchmark: *benchmark
         exchange_kwargs:
@@ -45,13 +51,13 @@ task:
         module_path: qlib.data.dataset
         kwargs:
             handler:
-                class: Alpha158
-                module_path: qlib.contrib.data.handler
+                class: DailyHandler
+                module_path: qlib.contrib.data.daily_handler
                 kwargs: *data_handler_config
             segments:
-                train: [2008-01-01, 2014-12-31]
-                valid: [2015-01-01, 2016-12-31]
-                test: [2017-01-01, 2020-08-01]
+                train: [2008-01-01, 2022-12-31]
+                valid: [2023-01-01, 2023-12-31]
+                test: [2024-01-01, 2024-05-20]
     record: 
         - class: SignalRecord
           module_path: qlib.workflow.record_temp
