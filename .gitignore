@@ -40,6 +40,7 @@ test-output.xml
 
 # special software
 mlruns/
+examples/benchmarks/MASTER/mlruns/
 
 tags
 

@@ -7,30 +7,31 @@ Qlib provides two kinds of interfaces.
 
 The interface of (1) is `qrun XXX.yaml`.  The interface of (2) is script like this, which nearly does the same thing as `qrun XXX.yaml`
 """
+from qlib.contrib.report import analysis_model, analysis_position
+import numpy as np
+import pprint as pp
+import os
+import argparse
+import yaml
+from qlib.tests.data import GetData
+from qlib.workflow.record_temp import SignalRecord, PortAnaRecord, SigAnaRecord
+from qlib.workflow import R
+from qlib.utils import init_instance_by_config
+from qlib.constant import REG_CN
+import qlib
 import sys
 from pathlib import Path
 DIRNAME = Path(__file__).absolute().resolve().parent
 sys.path.append(str(DIRNAME))
 sys.path.append(str(DIRNAME.parent.parent.parent))
 
-import qlib
-from qlib.constant import REG_CN
-from qlib.utils import init_instance_by_config
-from qlib.workflow import R
-from qlib.workflow.record_temp import SignalRecord, PortAnaRecord, SigAnaRecord
-from qlib.tests.data import GetData
-import yaml
-import argparse
-import os
-import pprint as pp
-import numpy as np
-import pandas as pd
 
 def parse_args():
     """parse arguments. You can add other arguments if needed."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--only_backtest", action="store_true", help="whether only backtest or not")
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = parse_args()
@@ -70,7 +71,7 @@ if __name__ == "__main__":
         ]
     }
 
-    for seed in range(25,26):
+    for seed in range(0, 1):
         print("------------------------")
         print(f"seed: {seed}")
 
@@ -84,12 +85,13 @@ if __name__ == "__main__":
             model.load_model(f"./model/{config['market']}master_{seed}.pkl")
             predictions = model.predict(dataset=dataset)
             predictions.to_csv("./logs/pred.csv")
+
         with R.start(experiment_name=f"workflow_seed{seed}"):
             # prediction
             recorder = R.get_recorder()
             sr = SignalRecord(model, dataset, recorder)
             sr.generate()
-            
+
             # Signal Analysis
             sar = SigAnaRecord(recorder)
             sar.generate()
@@ -104,7 +106,6 @@ if __name__ == "__main__":
             for k in all_metrics.keys():
                 all_metrics[k].append(metrics[k])
             pp.pprint(all_metrics)
-            report_normal_df = recorder.load_object("portfolio_analysis/report_normal_1week.pkl")
-            report_normal_df.to_csv("./logs/report.csv")
+
     for k in all_metrics.keys():
         print(f"{k}: {np.mean(all_metrics[k])} +- {np.std(all_metrics[k])}")
