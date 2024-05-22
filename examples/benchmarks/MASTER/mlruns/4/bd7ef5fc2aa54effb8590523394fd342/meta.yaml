@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/boss/qlib/examples/benchmarks/MASTER/mlruns/4/bd7ef5fc2aa54effb8590523394fd342/artifacts
+end_time: 1716255499590
+entry_point_name: ''
+experiment_id: '4'
+lifecycle_stage: active
+run_id: bd7ef5fc2aa54effb8590523394fd342
+run_name: mlflow_recorder
+run_uuid: bd7ef5fc2aa54effb8590523394fd342
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716255482387
+status: 3
+tags: []
+user_id: boss
