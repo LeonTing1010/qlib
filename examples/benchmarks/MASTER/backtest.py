@@ -29,7 +29,7 @@ sys.path.append(str(DIRNAME.parent.parent.parent))
 def parse_args():
     """parse arguments. You can add other arguments if needed."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--only_backtest", action="store_true", help="whether only backtest or not")
+    parser.add_argument("-s", "--seed", type=int, default=0, help="sedd of the model")
     return parser.parse_args()
 
 
@@ -71,41 +71,38 @@ if __name__ == "__main__":
         ]
     }
 
-    for seed in range(7, 10):
-        print("------------------------")
-        print(f"seed: {seed}")
+    seed = args.seed
+    print("------------------------")
+    print(f"seed: {seed}")
 
-        config['task']["model"]['kwargs']["seed"] = seed
-        model = init_instance_by_config(config['task']["model"])
+    config['task']["model"]['kwargs']["seed"] = seed
+    model = init_instance_by_config(config['task']["model"])
 
-        # start exp
-        if not args.only_backtest:
-            model.fit(dataset=dataset)
-        else:
-            model.load_model(f"./model/{config['market']}master_{seed}.pkl")
-            predictions = model.predict(dataset=dataset)
-            predictions.to_csv(f"./logs/pred{seed}.csv")
+   
+    model.load_model(f"./model/{config['market']}master_{seed}.pkl")
+    predictions = model.predict(dataset=dataset)
+    predictions.to_csv(f"./logs/pred{seed}.csv")
 
-        with R.start(experiment_name=f"workflow_seed{seed}"):
+    with R.start(experiment_name=f"workflow_seed{seed}"):
             # prediction
-            recorder = R.get_recorder()
-            sr = SignalRecord(model, dataset, recorder)
-            sr.generate()
+        recorder = R.get_recorder()
+        sr = SignalRecord(model, dataset, recorder)
+        sr.generate()
 
             # Signal Analysis
-            sar = SigAnaRecord(recorder)
-            sar.generate()
+        sar = SigAnaRecord(recorder)
+        sar.generate()
 
             # backtest. If users want to use backtest based on their own prediction,
             # please refer to https://qlib.readthedocs.io/en/latest/component/recorder.html#record-template.
-            par = PortAnaRecord(recorder, config['port_analysis_config'], "week")
-            par.generate()
+        par = PortAnaRecord(recorder, config['port_analysis_config'], "week")
+        par.generate()
 
-            metrics = recorder.list_metrics()
-            print(metrics)
-            for k in all_metrics.keys():
-                all_metrics[k].append(metrics[k])
-            pp.pprint(all_metrics)
+        metrics = recorder.list_metrics()
+        print(metrics)
+        for k in all_metrics.keys():
+            all_metrics[k].append(metrics[k])
+        pp.pprint(all_metrics)
 
     for k in all_metrics.keys():
         print(f"{k}: {np.mean(all_metrics[k])} +- {np.std(all_metrics[k])}")
