@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import copy
@@ -11,10 +12,14 @@ from torch.nn.modules.linear import Linear
 from torch.nn.modules.dropout import Dropout
 from torch.nn.modules.normalization import LayerNorm
 import torch.optim as optim
+
+from qlib.contrib.data.master_dataset import MASTERTSDatasetH
 from ...utils import get_or_create_path
 from ...data.dataset import DatasetH
 from ...data.dataset.handler import DataHandlerLP
 from ...model.base import Model
+from qlib.contrib.model.pytorch_utils import count_parameters
+from qlib.log import get_module_logger
 
 
 class PositionalEncoding(nn.Module):
@@ -245,6 +250,11 @@ class MASTERModel(Model):
     def __init__(self, d_feat: int = 158, d_model: int = 256, t_nhead: int = 4, s_nhead: int = 2, gate_input_start_index=158, gate_input_end_index=221,
                  T_dropout_rate=0.5, S_dropout_rate=0.5, beta=None, n_epochs=40, lr=8e-6, GPU=0, seed=0, train_stop_loss_thred=None, save_path='model/', save_prefix='', benchmark='SH000300', market='csi300', only_backtest=False):
 
+        # Set logger.
+        self.logger = get_module_logger("MASTER")
+        self.logger.info("MASTER pytorch version...")
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(GPU)
+
         self.d_model = d_model
         self.d_feat = d_feat
 
@@ -284,6 +294,33 @@ class MASTERModel(Model):
         self.save_path = save_path
         self.save_prefix = save_prefix
         self.only_backtest = only_backtest
+        self.logger.info(
+            "MASTER parameters setting:"
+            "\n d_feat : {}"
+            "\n d_model : {}"
+            "\n t_nhead : {}"
+            "\n s_nhead : {}"
+            "\n n_epochs : {}"
+            "\n lr : {}"
+            "\n beta : {}"
+            "\n train_stop_loss_thred : {}"
+            "\n visible_GPU : {}"
+            "\n seed : {}".format(
+                d_feat,
+                d_model,
+                t_nhead,
+                s_nhead,
+                n_epochs,
+                lr,
+                beta,
+                train_stop_loss_thred,
+                GPU,
+                seed,
+            )
+        )
+
+        self.logger.info("model:\n{:}".format(self.model))
+        self.logger.info("model size: {:.4f} MB".format(count_parameters(self.model)))
 
     def init_model(self):
         if self.model is None:
@@ -361,8 +398,8 @@ class MASTERModel(Model):
         if dl_train.empty or dl_valid.empty:
             raise ValueError("Empty data from dataset, please check your dataset config.")
 
-        dl_train.config(fillna_type="ffill+bfill")  # process nan brought by dataloader
-        dl_valid.config(fillna_type="ffill+bfill")  # process nan brought by dataloader
+        # dl_train.config(fillna_type="ffill+bfill")  # process nan brought by dataloader
+        # dl_valid.config(fillna_type="ffill+bfill")  # process nan brought by dataloader
 
         train_loader = self._init_data_loader(dl_train, shuffle=True, drop_last=True)
         valid_loader = self._init_data_loader(dl_valid, shuffle=False, drop_last=True)
@@ -414,4 +451,3 @@ class MASTERModel(Model):
         # pred_all = pred_all.loc[self.label_all.index]
         # rec = self.backtest()
         return pred_all
-
