@@ -7,7 +7,6 @@ Qlib provides two kinds of interfaces.
 
 The interface of (1) is `qrun XXX.yaml`.  The interface of (2) is script like this, which nearly does the same thing as `qrun XXX.yaml`
 """
-from qlib.contrib.report import analysis_model, analysis_position
 import numpy as np
 import pprint as pp
 import os
@@ -83,8 +82,6 @@ if __name__ == "__main__":
             model.fit(dataset=dataset)
         else:
             model.load_model(f"./model/{config['market']}master_{seed}.pkl")
-            predictions = model.predict(dataset=dataset)
-            predictions.to_csv(f"./logs/pred{seed}.csv")
 
         with R.start(experiment_name=f"workflow_seed{seed}"):
             # prediction
