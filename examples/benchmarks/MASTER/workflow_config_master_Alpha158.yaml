@@ -4,10 +4,10 @@ qlib_init:
 market: &market csi300
 benchmark: &benchmark SH000300
 data_handler_config: &data_handler_config
-    start_time: 2020-01-01
-    end_time: 2024-05-22
-    fit_start_time: 2020-01-01
-    fit_end_time: 2021-12-31
+    start_time: 2008-01-01
+    end_time: 2024-05-28
+    fit_start_time: 2008-01-01
+    fit_end_time: 2022-12-31
     instruments: *market
     infer_processors:
         - class: RobustZScoreNorm
@@ -24,10 +24,10 @@ data_handler_config: &data_handler_config
               fields_group: label
     label: ["Ref($close, -5) / Ref($close, -1) - 1"] 
 market_data_handler_config: &market_data_handler_config
-    start_time: 2020-01-01
-    end_time: 2024-05-22
-    fit_start_time: 2020-01-01
-    fit_end_time: 2021-12-31
+    start_time: 2008-01-01
+    end_time: 2024-05-28
+    fit_start_time: 2008-01-01
+    fit_end_time: 2022-12-31
     instruments: *market
     infer_processors:
         - class: RobustZScoreNorm
@@ -39,21 +39,21 @@ market_data_handler_config: &market_data_handler_config
               fields_group: feature
 port_analysis_config: &port_analysis_config
     executor: 
-            class: SimulatorExecutor
-            module_path: qlib.backtest.executor
-            kwargs: 
-                time_per_step: week
-                generate_portfolio_metrics: true
+        class: SimulatorExecutor
+        module_path: qlib.backtest.executor
+        kwargs: 
+            time_per_step: week
+            generate_portfolio_metrics: true
     strategy:
         class: TopkDropoutStrategy
         module_path: qlib.contrib.strategy
         kwargs:
             signal: <PRED>
-            topk: 20
-            n_drop: 20
+            topk: 30
+            n_drop: 30
     backtest:
-        start_time: 2024-04-01
-        end_time: 2024-04-22
+        start_time: 2024-03-01
+        end_time: 2024-05-28
         account: 100000000
         benchmark: *benchmark
         exchange_kwargs:
@@ -79,9 +79,9 @@ task:
                 module_path: qlib.contrib.data.handler
                 kwargs: *data_handler_config
             segments:
-                train: [2020-01-01, 2021-12-31]
-                valid: [2022-01-01, 2023-12-31]
-                test: [2024-01-01, 2024-05-22]
+                train: [2008-01-01, 2022-12-31]
+                valid: [2023-01-01, 2023-12-31]
+                test: [2024-01-01, 2024-05-28]
             step_len: 20
             market_data_handler_config: *market_data_handler_config
     record: 

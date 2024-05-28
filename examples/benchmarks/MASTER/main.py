@@ -71,7 +71,7 @@ if __name__ == "__main__":
         ]
     }
 
-    for seed in range(130, 133):
+    for seed in range(1, 3):
         print("------------------------")
         print(f"seed: {seed}")
 
