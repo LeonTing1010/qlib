@@ -291,8 +291,9 @@ class MASTERModel(Model):
         self.train_optimizer = optim.Adam(self.model.parameters(), self.lr)
         self.model.to(self.device)
 
-        self.save_path = save_path
         self.save_prefix = save_prefix
+        self.save_path = save_path
+        self.save_path = f'{self.save_path}{self.save_prefix}master_{self.seed}.pkl'
         self.only_backtest = only_backtest
         self.logger.info(
             "MASTER parameters setting:"
@@ -335,6 +336,7 @@ class MASTERModel(Model):
             self.fitted = True
         except:
             raise ValueError("Model not found.")
+        self.logger.info(f"model from :{param_path}")
 
     def loss_fn(self, pred, label):
         mask = ~torch.isnan(label)
@@ -351,7 +353,7 @@ class MASTERModel(Model):
             data.shape: (N, T, F)
             N - number of stocks
             T - length of lookback_window, 8
-            F - 158 factors + 63 market information + 1 label
+            F - 158 factors + 63 market information + 1 label           
             '''
             feature = data[:, :, 0:-1].to(self.device)
             label = data[:, -1, -1].to(self.device)
@@ -387,9 +389,9 @@ class MASTERModel(Model):
         data_loader = DataLoader(data, sampler=sampler, drop_last=drop_last)
         return data_loader
 
-    def load_param(self, param_path):
-        self.model.load_state_dict(torch.load(param_path, map_location=self.device))
-        self.fitted = True
+    # def load_param(self, param_path):
+    #     self.model.load_state_dict(torch.load(param_path, map_location=self.device))
+    #     self.fitted = True
 
     def fit(self, dataset: DatasetH, save_path=None):
         dl_train = dataset.prepare("train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
@@ -404,7 +406,7 @@ class MASTERModel(Model):
         train_loader = self._init_data_loader(dl_train, shuffle=True, drop_last=True)
         valid_loader = self._init_data_loader(dl_valid, shuffle=False, drop_last=True)
 
-        save_path = get_or_create_path(save_path)
+        # save_path = get_or_create_path(save_path)
         self.fitted = True
         best_param = None
         best_val_loss = 1e3
@@ -414,23 +416,26 @@ class MASTERModel(Model):
             train_loss = self.train_epoch(train_loader)
             val_loss = self.test_epoch(valid_loader)
 
-            print("Epoch %d, train_loss %.6f, valid_loss %.6f " % (step, train_loss, val_loss))
+            self.logger.info("Epoch %d, train_loss %.6f, valid_loss %.6f " % (step, train_loss, val_loss))
             if best_val_loss > val_loss:
                 best_param = copy.deepcopy(self.model.state_dict())
                 best_val_loss = val_loss
                 best_epoch = step
             if train_loss <= self.train_stop_loss_thred:
-                # self.logger.info("early stop")
+                self.logger.info("early stop")
                 break
-        torch.save(best_param, f'{self.save_path}{self.save_prefix}master_{self.seed}.pkl')
-        # self.logger.info("best score: %.6lf @ %d" % (best_val_loss, best_epoch))
-        self.model.load_state_dict(best_param)
-        torch.save(best_param, save_path)
+        # torch.save(best_param, f'{self.save_path}{self.save_prefix}master_{self.seed}.pkl')
+        self.logger.info("best score: %.6lf @ %d" % (best_val_loss, best_epoch))
+        # self.model.load_state_dict(best_param)
+        torch.save(best_param, self.save_path)
+        self.logger.info(f"Save best params to {self.save_path}")
 
         # if self.use_gpu:
         #     torch.cuda.empty_cache()
 
-    def predict(self, dataset: DatasetH):
+    def predict(self, dataset: DatasetH, use_pretrained=True):
+        if use_pretrained:
+            self.load_model(f'{self.save_path}')
         if not self.fitted:
             raise ValueError("model is not fitted yet!")
 
@@ -448,6 +453,4 @@ class MASTERModel(Model):
             pred_all.append(pred.ravel())
 
         pred_all = pd.DataFrame(np.concatenate(pred_all), index=dl_test.get_index())
-        # pred_all = pred_all.loc[self.label_all.index]
-        # rec = self.backtest()
         return pred_all
