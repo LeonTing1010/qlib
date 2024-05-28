@@ -4,9 +4,9 @@ qlib_init:
 market: &market csi300
 benchmark: &benchmark SH000300
 data_handler_config: &data_handler_config
-    start_time: 2020-01-01
+    start_time: 2008-01-01
     end_time: 2024-05-28
-    fit_start_time: 2020-01-01
+    fit_start_time: 2008-01-01
     fit_end_time: 2022-12-31
     instruments: *market
     infer_processors:
@@ -24,9 +24,9 @@ data_handler_config: &data_handler_config
               fields_group: label
     label: ["Ref($close, -5) / Ref($close, -1) - 1"] 
 market_data_handler_config: &market_data_handler_config
-    start_time: 2020-01-01
+    start_time: 2008-01-01
     end_time: 2024-05-28
-    fit_start_time: 2020-01-01
+    fit_start_time: 2008-01-01
     fit_end_time: 2022-12-31
     instruments: *market
     infer_processors:
@@ -79,7 +79,7 @@ task:
                 module_path: qlib.contrib.data.handler
                 kwargs: *data_handler_config
             segments:
-                train: [2020-01-01, 2022-12-31]
+                train: [2008-01-01, 2022-12-31]
                 valid: [2023-01-01, 2023-12-31]
                 test: [2024-01-01, 2024-05-28]
             step_len: 60
