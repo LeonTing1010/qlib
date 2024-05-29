@@ -1,20 +1,20 @@
-2024-05-28 23:12:23.749 | WARNING  | qlib.tests.data:qlib_data:195 - Data already exists: ~/.qlib/qlib_data/cn_data, the data download will be skipped
+2024-05-29 19:39:58.374 | WARNING  | qlib.tests.data:qlib_data:195 - Data already exists: ~/.qlib/qlib_data/cn_data, the data download will be skipped
 	If downloading is required: `exists_skip=False` or `change target_dir`
-[11739:MainThread](2024-05-28 23:12:23,750) INFO - qlib.Initialization - [config.py:416] - default_conf: client.
-[11739:MainThread](2024-05-28 23:12:23,751) INFO - qlib.Initialization - [__init__.py:74] - qlib successfully initialized based on client settings.
-[11739:MainThread](2024-05-28 23:12:23,751) INFO - qlib.Initialization - [__init__.py:76] - data_path={'__DEFAULT_FREQ': PosixPath('/Users/boss/.qlib/qlib_data/cn_data')}
-[11739:MainThread](2024-05-28 23:12:27,921) INFO - qlib.timer - [log.py:127] - Time cost: 3.625s | Loading data Done
+[14626:MainThread](2024-05-29 19:39:58,375) INFO - qlib.Initialization - [config.py:416] - default_conf: client.
+[14626:MainThread](2024-05-29 19:39:58,376) INFO - qlib.Initialization - [__init__.py:74] - qlib successfully initialized based on client settings.
+[14626:MainThread](2024-05-29 19:39:58,376) INFO - qlib.Initialization - [__init__.py:76] - data_path={'__DEFAULT_FREQ': PosixPath('/Users/boss/.qlib/qlib_data/cn_data')}
+[14626:MainThread](2024-05-29 19:40:04,351) INFO - qlib.timer - [log.py:127] - Time cost: 5.193s | Loading data Done
 /Users/boss/qlib/.venv/lib/python3.9/site-packages/numpy/lib/nanfunctions.py:1095: RuntimeWarning: All-NaN slice encountered
   result = np.apply_along_axis(_nanmedian1d, axis, a, overwrite_input)
-[11739:MainThread](2024-05-28 23:12:28,456) INFO - qlib.timer - [log.py:127] - Time cost: 0.530s | RobustZScoreNorm Done
-[11739:MainThread](2024-05-28 23:12:28,487) INFO - qlib.timer - [log.py:127] - Time cost: 0.030s | Fillna Done
-[11739:MainThread](2024-05-28 23:12:28,487) INFO - qlib.timer - [log.py:127] - Time cost: 0.566s | fit & process data Done
-[11739:MainThread](2024-05-28 23:12:28,487) INFO - qlib.timer - [log.py:127] - Time cost: 4.192s | Init data Done
+[14626:MainThread](2024-05-29 19:40:06,583) INFO - qlib.timer - [log.py:127] - Time cost: 2.216s | RobustZScoreNorm Done
+[14626:MainThread](2024-05-29 19:40:06,697) INFO - qlib.timer - [log.py:127] - Time cost: 0.114s | Fillna Done
+[14626:MainThread](2024-05-29 19:40:06,697) INFO - qlib.timer - [log.py:127] - Time cost: 2.346s | fit & process data Done
+[14626:MainThread](2024-05-29 19:40:06,697) INFO - qlib.timer - [log.py:127] - Time cost: 7.539s | Init data Done
 ------------------------
-seed: 1
+seed: 2
 ModuleNotFoundError. CatBoostModel are skipped. (optional: maybe installing CatBoostModel can fix it.)
-[11739:MainThread](2024-05-28 23:12:28,609) INFO - qlib.MASTER - [pytorch_master_ts.py:255] - MASTER pytorch version...
-[11739:MainThread](2024-05-28 23:12:28,936) INFO - qlib.MASTER - [pytorch_master_ts.py:298] - MASTER parameters setting:
+[14626:MainThread](2024-05-29 19:40:06,819) INFO - qlib.MASTER - [pytorch_master_ts.py:255] - MASTER pytorch version...
+[14626:MainThread](2024-05-29 19:40:07,150) INFO - qlib.MASTER - [pytorch_master_ts.py:298] - MASTER parameters setting:
  d_feat : 158
  d_model : 256
  t_nhead : 4
@@ -22,10 +22,10 @@ ModuleNotFoundError. CatBoostModel are skipped. (optional: maybe installing CatB
  n_epochs : 40
  lr : 8e-06
  beta : None
- train_stop_loss_thred : 0.95
+ train_stop_loss_thred : 0.85
  visible_GPU : 0
- seed : 1
-[11739:MainThread](2024-05-28 23:12:28,936) INFO - qlib.MASTER - [pytorch_master_ts.py:323] - model:
+ seed : 2
+[14626:MainThread](2024-05-29 19:40:07,150) INFO - qlib.MASTER - [pytorch_master_ts.py:323] - model:
 MASTER(
   (feature_gate): Gate(
     (trans): Linear(in_features=63, out_features=158, bias=True)
@@ -71,49 +71,43 @@ MASTER(
   )
   (decoder): Linear(in_features=256, out_features=1, bias=True)
 )
-[11739:MainThread](2024-05-28 23:12:28,936) INFO - qlib.MASTER - [pytorch_master_ts.py:324] - model size: 0.7391 MB
+[14626:MainThread](2024-05-29 19:40:07,151) INFO - qlib.MASTER - [pytorch_master_ts.py:324] - model size: 0.7391 MB
 /Users/boss/qlib/.venv/lib/python3.9/site-packages/qlib/contrib/model/pytorch_master_ts.py:231: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
   self.daily_count = pd.Series(index=self.data_source.get_index()).groupby("datetime").size().values
-[11739:MainThread](2024-05-28 23:13:41,232) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 0, train_loss 1.072311, valid_loss 0.988972 
-[11739:MainThread](2024-05-28 23:14:52,808) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 1, train_loss 1.022349, valid_loss 0.979581 
-[11739:MainThread](2024-05-28 23:16:05,397) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 2, train_loss 1.001556, valid_loss 0.976733 
-[11739:MainThread](2024-05-28 23:17:18,485) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 3, train_loss 0.990239, valid_loss 0.974508 
-[11739:MainThread](2024-05-28 23:18:32,280) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 4, train_loss 0.984217, valid_loss 0.973363 
-[11739:MainThread](2024-05-28 23:19:53,050) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 5, train_loss 0.977864, valid_loss 0.972366 
-[11739:MainThread](2024-05-28 23:21:15,069) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 6, train_loss 0.972876, valid_loss 0.970340 
-[11739:MainThread](2024-05-28 23:22:37,330) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 7, train_loss 0.969696, valid_loss 0.968601 
-[11739:MainThread](2024-05-28 23:23:58,895) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 8, train_loss 0.966075, valid_loss 0.966005 
-[11739:MainThread](2024-05-28 23:25:21,996) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 9, train_loss 0.963148, valid_loss 0.966178 
-[11739:MainThread](2024-05-28 23:26:45,639) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 10, train_loss 0.958613, valid_loss 0.961172 
-[11739:MainThread](2024-05-28 23:28:10,473) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 11, train_loss 0.954036, valid_loss 0.958744 
-[11739:MainThread](2024-05-28 23:29:34,425) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 12, train_loss 0.949364, valid_loss 0.954508 
-[11739:MainThread](2024-05-28 23:29:34,427) INFO - qlib.MASTER - [pytorch_master_ts.py:425] - early stop
-[11739:MainThread](2024-05-28 23:29:34,428) INFO - qlib.MASTER - [pytorch_master_ts.py:428] - best score: 0.954508 @ 12
-[11739:MainThread](2024-05-28 23:29:34,431) INFO - qlib.MASTER - [pytorch_master_ts.py:431] - Save best params to model/csi300master_1.pkl
-[11739:MainThread](2024-05-28 23:29:34,444) INFO - qlib.workflow - [exp.py:258] - Experiment 2 starts running ...
-[11739:MainThread](2024-05-28 23:29:34,513) INFO - qlib.workflow - [recorder.py:341] - Recorder 43fb88f0dd684580ab446a731f70f691 starts running under Experiment 2 ...
-[11739:MainThread](2024-05-28 23:29:34,583) INFO - qlib.MASTER - [pytorch_master_ts.py:339] - model from :model/csi300master_1.pkl
+[14626:MainThread](2024-05-29 19:50:33,449) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 0, train_loss 1.022497, valid_loss 0.985052 
+[14626:MainThread](2024-05-29 20:01:06,417) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 1, train_loss 0.980803, valid_loss 0.974353 
+[14626:MainThread](2024-05-29 20:11:25,882) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 2, train_loss 0.970973, valid_loss 0.979685 
+[14626:MainThread](2024-05-29 20:21:14,720) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 3, train_loss 0.960250, valid_loss 0.953522 
+[14626:MainThread](2024-05-29 20:31:24,506) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 4, train_loss 0.937565, valid_loss 0.911343 
+[14626:MainThread](2024-05-29 20:41:36,113) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 5, train_loss 0.893759, valid_loss 0.834679 
+[14626:MainThread](2024-05-29 20:51:38,184) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 6, train_loss 0.829986, valid_loss 0.753528 
+[14626:MainThread](2024-05-29 20:51:38,186) INFO - qlib.MASTER - [pytorch_master_ts.py:425] - early stop
+[14626:MainThread](2024-05-29 20:51:38,186) INFO - qlib.MASTER - [pytorch_master_ts.py:428] - best score: 0.753528 @ 6
+[14626:MainThread](2024-05-29 20:51:38,189) INFO - qlib.MASTER - [pytorch_master_ts.py:431] - Save best params to model/csi300master_2.pkl
+[14626:MainThread](2024-05-29 20:51:38,232) INFO - qlib.workflow - [exp.py:258] - Experiment 3 starts running ...
+[14626:MainThread](2024-05-29 20:51:38,303) INFO - qlib.workflow - [recorder.py:341] - Recorder 3dc22616e71044c48b46cc72ead3faeb starts running under Experiment 3 ...
+[14626:MainThread](2024-05-29 20:51:38,399) INFO - qlib.MASTER - [pytorch_master_ts.py:339] - model from :model/csi300master_2.pkl
 /Users/boss/qlib/.venv/lib/python3.9/site-packages/qlib/contrib/model/pytorch_master_ts.py:231: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
   self.daily_count = pd.Series(index=self.data_source.get_index()).groupby("datetime").size().values
-[11739:MainThread](2024-05-28 23:29:37,396) INFO - qlib.workflow - [record_temp.py:198] - Signal record 'pred.pkl' has been saved as the artifact of the Experiment 2
+[14626:MainThread](2024-05-29 20:51:42,898) INFO - qlib.workflow - [record_temp.py:198] - Signal record 'pred.pkl' has been saved as the artifact of the Experiment 3
 'The following are prediction results of the MASTERModel model.'
                               0
 datetime   instrument          
-2024-01-02 SH600000    0.292071
-2024-01-03 SH600000    0.291141
-2024-01-04 SH600000    0.282112
-2024-01-05 SH600000    0.244741
-2024-01-08 SH600000    0.278890
-{'IC': 0.16417699734042715,
- 'ICIR': 0.7820898247571326,
- 'Rank IC': 0.17999877745128331,
- 'Rank ICIR': 0.7942034337730284}
-[11739:MainThread](2024-05-28 23:29:37,668) INFO - qlib.backtest caller - [__init__.py:93] - Create new exchange
-[11739:MainThread](2024-05-28 23:29:42,322) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
-[11739:MainThread](2024-05-28 23:29:42,322) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
-[11739:MainThread](2024-05-28 23:29:42,903) WARNING - qlib.BaseExecutor - [executor.py:121] - `common_infra` is not set for <qlib.backtest.executor.SimulatorExecutor object at 0x328a91550>
-backtest loop:   0%|          | 0/13 [00:00<?, ?it/s]backtest loop:  92%|█████████▏| 12/13 [00:00<00:00, 115.49it/s]backtest loop: 100%|██████████| 13/13 [00:00<00:00, 116.89it/s]
-[11739:MainThread](2024-05-28 23:29:43,035) INFO - qlib.workflow - [record_temp.py:515] - Portfolio analysis record 'port_analysis_1week.pkl' has been saved as the artifact of the Experiment 2
+2024-01-02 SH600000    0.267301
+2024-01-03 SH600000    0.269782
+2024-01-04 SH600000    0.239340
+2024-01-05 SH600000    0.377610
+2024-01-08 SH600000    0.354681
+{'IC': 0.5449683744824122,
+ 'ICIR': 5.235412877648428,
+ 'Rank IC': 0.5482639711418558,
+ 'Rank ICIR': 4.924909320839182}
+[14626:MainThread](2024-05-29 20:51:43,169) INFO - qlib.backtest caller - [__init__.py:93] - Create new exchange
+[14626:MainThread](2024-05-29 20:51:47,793) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
+[14626:MainThread](2024-05-29 20:51:47,794) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
+[14626:MainThread](2024-05-29 20:51:48,375) WARNING - qlib.BaseExecutor - [executor.py:121] - `common_infra` is not set for <qlib.backtest.executor.SimulatorExecutor object at 0x2be36f9d0>
+backtest loop:   0%|          | 0/13 [00:00<?, ?it/s]backtest loop:  69%|██████▉   | 9/13 [00:00<00:00, 83.57it/s]backtest loop: 100%|██████████| 13/13 [00:00<00:00, 84.45it/s]
+[14626:MainThread](2024-05-29 20:51:48,552) INFO - qlib.workflow - [record_temp.py:515] - Portfolio analysis record 'port_analysis_1week.pkl' has been saved as the artifact of the Experiment 3
 'The following are analysis results of benchmark return(1week).'
                        risk
 mean               0.001618
@@ -123,27 +117,160 @@ information_ratio  0.867458
 max_drawdown      -0.026325
 'The following are analysis results of the excess return without cost(1week).'
                        risk
-mean               0.008175
-std                0.013230
-annualized_return  0.408731
-information_ratio  4.368960
-max_drawdown      -0.022279
+mean               0.018879
+std                0.017873
+annualized_return  0.943969
+information_ratio  7.469187
+max_drawdown      -0.005803
 'The following are analysis results of the excess return with cost(1week).'
                        risk
-mean               0.006709
-std                0.013315
-annualized_return  0.335458
-information_ratio  3.563039
-max_drawdown      -0.024052
-[11739:MainThread](2024-05-28 23:29:43,040) INFO - qlib.workflow - [record_temp.py:540] - Indicator analysis record 'indicator_analysis_1week.pkl' has been saved as the artifact of the Experiment 2
+mean               0.016178
+std                0.018124
+annualized_return  0.808887
+information_ratio  6.311810
+max_drawdown      -0.009279
+[14626:MainThread](2024-05-29 20:51:48,556) INFO - qlib.workflow - [record_temp.py:540] - Indicator analysis record 'indicator_analysis_1week.pkl' has been saved as the artifact of the Experiment 3
 'The following are analysis results of indicators(1week).'
      value
 ffr    1.0
 pa     0.0
 pos    0.0
-{'Rank IC': 0.17999877745128331, '1week.excess_return_without_cost.mean': 0.00817462261052179, 'ICIR': 0.7820898247571326, '1week.excess_return_without_cost.std': 0.013230449534932362, 'IC': 0.16417699734042715, '1week.excess_return_without_cost.annualized_return': 0.4087311305260895, 'Rank ICIR': 0.7942034337730284}
-[11739:MainThread](2024-05-28 23:29:43,057) INFO - qlib.timer - [log.py:127] - Time cost: 0.006s | waiting `async_log` Done
-[11739:MainThread](2024-05-28 23:29:43,059) ERROR - qlib.workflow - [utils.py:41] - An exception has been raised[KeyError: '1week.excess_return_without_cost.information_ratio'].
+{'Rank IC': 0.5482639711418558, '1week.excess_return_without_cost.mean': 0.018879371988162967, 'ICIR': 5.235412877648428, '1week.excess_return_without_cost.information_ratio': 7.469187361567549, '1week.excess_return_without_cost.std': 0.017873071475036202, 'IC': 0.5449683744824122, '1week.excess_return_without_cost.annualized_return': 0.9439685994081484, 'Rank ICIR': 4.924909320839182}
+{'1week.excess_return_without_cost.annualized_return': [0.9439685994081484],
+ '1week.excess_return_without_cost.information_ratio': [7.469187361567549],
+ 'IC': [0.5449683744824122],
+ 'ICIR': [5.235412877648428],
+ 'Rank IC': [0.5482639711418558],
+ 'Rank ICIR': [4.924909320839182]}
+[14626:MainThread](2024-05-29 20:51:48,575) INFO - qlib.timer - [log.py:127] - Time cost: 0.005s | waiting `async_log` Done
+------------------------
+seed: 3
+[14626:MainThread](2024-05-29 20:51:48,577) INFO - qlib.MASTER - [pytorch_master_ts.py:255] - MASTER pytorch version...
+[14626:MainThread](2024-05-29 20:51:48,586) INFO - qlib.MASTER - [pytorch_master_ts.py:298] - MASTER parameters setting:
+ d_feat : 158
+ d_model : 256
+ t_nhead : 4
+ s_nhead : 2
+ n_epochs : 40
+ lr : 8e-06
+ beta : None
+ train_stop_loss_thred : 0.85
+ visible_GPU : 0
+ seed : 3
+[14626:MainThread](2024-05-29 20:51:48,587) INFO - qlib.MASTER - [pytorch_master_ts.py:323] - model:
+MASTER(
+  (feature_gate): Gate(
+    (trans): Linear(in_features=63, out_features=158, bias=True)
+  )
+  (x2y): Linear(in_features=158, out_features=256, bias=True)
+  (pe): PositionalEncoding()
+  (tatten): TAttention(
+    (qtrans): Linear(in_features=256, out_features=256, bias=False)
+    (ktrans): Linear(in_features=256, out_features=256, bias=False)
+    (vtrans): Linear(in_features=256, out_features=256, bias=False)
+    (attn_dropout): ModuleList(
+      (0-3): 4 x Dropout(p=0.5, inplace=False)
+    )
+    (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (ffn): Sequential(
+      (0): Linear(in_features=256, out_features=256, bias=True)
+      (1): ReLU()
+      (2): Dropout(p=0.5, inplace=False)
+      (3): Linear(in_features=256, out_features=256, bias=True)
+      (4): Dropout(p=0.5, inplace=False)
+    )
+  )
+  (satten): SAttention(
+    (qtrans): Linear(in_features=256, out_features=256, bias=False)
+    (ktrans): Linear(in_features=256, out_features=256, bias=False)
+    (vtrans): Linear(in_features=256, out_features=256, bias=False)
+    (attn_dropout): ModuleList(
+      (0-1): 2 x Dropout(p=0.5, inplace=False)
+    )
+    (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (ffn): Sequential(
+      (0): Linear(in_features=256, out_features=256, bias=True)
+      (1): ReLU()
+      (2): Dropout(p=0.5, inplace=False)
+      (3): Linear(in_features=256, out_features=256, bias=True)
+      (4): Dropout(p=0.5, inplace=False)
+    )
+  )
+  (temporalatten): TemporalAttention(
+    (trans): Linear(in_features=256, out_features=256, bias=False)
+  )
+  (decoder): Linear(in_features=256, out_features=1, bias=True)
+)
+[14626:MainThread](2024-05-29 20:51:48,587) INFO - qlib.MASTER - [pytorch_master_ts.py:324] - model size: 0.7391 MB
+/Users/boss/qlib/.venv/lib/python3.9/site-packages/qlib/contrib/model/pytorch_master_ts.py:231: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  self.daily_count = pd.Series(index=self.data_source.get_index()).groupby("datetime").size().values
+[14626:MainThread](2024-05-29 21:02:01,489) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 0, train_loss 1.025762, valid_loss 0.977988 
+[14626:MainThread](2024-05-29 21:12:06,644) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 1, train_loss 0.980741, valid_loss 0.971989 
+[14626:MainThread](2024-05-29 21:22:07,318) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 2, train_loss 0.970847, valid_loss 0.964475 
+[14626:MainThread](2024-05-29 21:32:28,500) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 3, train_loss 0.960493, valid_loss 0.959382 
+[14626:MainThread](2024-05-29 21:42:49,285) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 4, train_loss 0.942635, valid_loss 0.928656 
+[14626:MainThread](2024-05-29 21:53:07,011) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 5, train_loss 0.907854, valid_loss 0.868974 
+[14626:MainThread](2024-05-29 22:03:24,022) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 6, train_loss 0.851382, valid_loss 0.779296 
+[14626:MainThread](2024-05-29 22:13:38,096) INFO - qlib.MASTER - [pytorch_master_ts.py:419] - Epoch 7, train_loss 0.786854, valid_loss 0.698740 
+[14626:MainThread](2024-05-29 22:13:38,099) INFO - qlib.MASTER - [pytorch_master_ts.py:425] - early stop
+[14626:MainThread](2024-05-29 22:13:38,099) INFO - qlib.MASTER - [pytorch_master_ts.py:428] - best score: 0.698740 @ 7
+[14626:MainThread](2024-05-29 22:13:38,105) INFO - qlib.MASTER - [pytorch_master_ts.py:431] - Save best params to model/csi300master_3.pkl
+[14626:MainThread](2024-05-29 22:13:38,143) INFO - qlib.workflow - [exp.py:258] - Experiment 4 starts running ...
+[14626:MainThread](2024-05-29 22:13:38,150) INFO - qlib.workflow - [recorder.py:341] - Recorder 333223c376b84d4d96262b942595b100 starts running under Experiment 4 ...
+[14626:MainThread](2024-05-29 22:13:38,251) INFO - qlib.MASTER - [pytorch_master_ts.py:339] - model from :model/csi300master_3.pkl
+/Users/boss/qlib/.venv/lib/python3.9/site-packages/qlib/contrib/model/pytorch_master_ts.py:231: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  self.daily_count = pd.Series(index=self.data_source.get_index()).groupby("datetime").size().values
+[14626:MainThread](2024-05-29 22:13:42,736) INFO - qlib.workflow - [record_temp.py:198] - Signal record 'pred.pkl' has been saved as the artifact of the Experiment 4
+'The following are prediction results of the MASTERModel model.'
+                              0
+datetime   instrument          
+2024-01-02 SH600000    0.260450
+2024-01-03 SH600000    0.273898
+2024-01-04 SH600000    0.229599
+2024-01-05 SH600000    0.327714
+2024-01-08 SH600000    0.345443
+{'IC': 0.5966354401319671,
+ 'ICIR': 5.855837135797943,
+ 'Rank IC': 0.5968874748386315,
+ 'Rank ICIR': 5.761735755488226}
+[14626:MainThread](2024-05-29 22:13:42,835) INFO - qlib.backtest caller - [__init__.py:93] - Create new exchange
+[14626:MainThread](2024-05-29 22:13:47,818) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
+[14626:MainThread](2024-05-29 22:13:47,818) WARNING - qlib.online operator - [exchange.py:219] - $close field data contains nan.
+[14626:MainThread](2024-05-29 22:13:48,346) WARNING - qlib.BaseExecutor - [executor.py:121] - `common_infra` is not set for <qlib.backtest.executor.SimulatorExecutor object at 0x2bfd91ac0>
+backtest loop:   0%|          | 0/13 [00:00<?, ?it/s]backtest loop:  62%|██████▏   | 8/13 [00:00<00:00, 77.76it/s]backtest loop: 100%|██████████| 13/13 [00:00<00:00, 81.61it/s]
+[14626:MainThread](2024-05-29 22:13:48,511) INFO - qlib.workflow - [record_temp.py:515] - Portfolio analysis record 'port_analysis_1week.pkl' has been saved as the artifact of the Experiment 4
+'The following are analysis results of benchmark return(1week).'
+                       risk
+mean               0.001618
+std                0.013192
+annualized_return  0.080917
+information_ratio  0.867458
+max_drawdown      -0.026325
+'The following are analysis results of the excess return without cost(1week).'
+                       risk
+mean               0.017198
+std                0.016285
+annualized_return  0.859909
+information_ratio  7.467412
+max_drawdown      -0.000927
+'The following are analysis results of the excess return with cost(1week).'
+                       risk
+mean               0.014336
+std                0.016496
+annualized_return  0.716791
+information_ratio  6.145258
+max_drawdown      -0.004795
+[14626:MainThread](2024-05-29 22:13:48,515) INFO - qlib.workflow - [record_temp.py:540] - Indicator analysis record 'indicator_analysis_1week.pkl' has been saved as the artifact of the Experiment 4
+'The following are analysis results of indicators(1week).'
+     value
+ffr    1.0
+pa     0.0
+pos    0.0
+{'Rank IC': 0.5968874748386315, '1week.excess_return_without_cost.mean': 0.01719818797235554, 'ICIR': 5.855837135797943, '1week.excess_return_without_cost.std': 0.016285369163894323, 'IC': 0.5966354401319671, '1week.excess_return_without_cost.annualized_return': 0.859909398617777, 'Rank ICIR': 5.761735755488226}
+[14626:MainThread](2024-05-29 22:13:48,534) INFO - qlib.timer - [log.py:127] - Time cost: 0.005s | waiting `async_log` Done
+[14626:MainThread](2024-05-29 22:13:48,535) ERROR - qlib.workflow - [utils.py:41] - An exception has been raised[KeyError: '1week.excess_return_without_cost.information_ratio'].
   File "/Users/boss/qlib/examples/benchmarks/MASTER/main.py", line 104, in <module>
     all_metrics[k].append(metrics[k])
 KeyError: '1week.excess_return_without_cost.information_ratio'
