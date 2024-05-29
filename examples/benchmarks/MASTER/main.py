@@ -66,7 +66,7 @@ if __name__ == "__main__":
             "Rank IC",
             "Rank ICIR",
             "1week.excess_return_without_cost.annualized_return",
-            "1week.excess_return_without_cost.information_ratio",
+            "1week.excess_return_without_cost.std",
         ]
     }
 
