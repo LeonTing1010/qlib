@@ -66,7 +66,7 @@ task:
             seed: 0
             n_epochs: 40
             lr: 0.000008
-            train_stop_loss_thred: 0.95
+            train_stop_loss_thred: 0.85
             market: *market
             benchmark: *benchmark
             save_prefix: *market
@@ -82,7 +82,7 @@ task:
                 train: [2008-01-01, 2022-12-31]
                 valid: [2023-01-01, 2023-12-31]
                 test: [2024-01-01, 2024-05-28]
-            step_len: 60
+            step_len: 20
             market_data_handler_config: *market_data_handler_config
     record: 
         - class: SignalRecord
