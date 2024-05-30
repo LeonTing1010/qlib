@@ -640,7 +640,7 @@ class DatasetH(Dataset):
 #         return len(self.idx_map)
 
  # V0.8.6
- class TSDataSampler:
+class TSDataSampler:
     """
     (T)ime-(S)eries DataSampler
     This is the result of TSDatasetH
@@ -767,7 +767,7 @@ class DatasetH(Dataset):
         Get the pandas index of the data, it will be useful in following scenarios
         - Special sampler will be used (e.g. user want to sample day by day)
         """
-        return self.data_index[self.start_idx : self.end_idx]
+        return self.data_index[self.start_idx: self.end_idx]
 
     def config(self, **kwargs):
         # Config the attributes
@@ -829,7 +829,7 @@ class DatasetH(Dataset):
         np.array:
             The indices of data of the data
         """
-        indices = self.idx_arr[max(row - self.step_len + 1, 0) : row + 1, col]
+        indices = self.idx_arr[max(row - self.step_len + 1, 0): row + 1, col]
 
         if len(indices) < self.step_len:
             indices = np.concatenate([np.full((self.step_len - len(indices),), np.nan), indices])
@@ -914,6 +914,8 @@ class DatasetH(Dataset):
 
     def __len__(self):
         return self.end_idx - self.start_idx
+
+
 class TSDatasetH(DatasetH):
     """
     (T)ime-(S)eries Dataset (H)andler
