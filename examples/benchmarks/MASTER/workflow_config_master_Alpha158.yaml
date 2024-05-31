@@ -66,7 +66,7 @@ task:
             seed: 0
             n_epochs: 40
             lr: 0.000008
-            train_stop_loss_thred: 0.05
+            train_stop_loss_thred: 0.95
             market: *market
             benchmark: *benchmark
             save_prefix: *market
