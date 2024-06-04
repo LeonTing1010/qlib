@@ -42,17 +42,17 @@ port_analysis_config: &port_analysis_config
         class: SimulatorExecutor
         module_path: qlib.backtest.executor
         kwargs: 
-            time_per_step: week
+            time_per_step: day
             generate_portfolio_metrics: true
     strategy:
         class: TopkDropoutStrategy
         module_path: qlib.contrib.strategy
         kwargs:
             signal: <PRED>
-            topk: 10
-            n_drop: 5
+            topk: 20
+            n_drop: 1
     backtest:
-        start_time: 2024-03-01
+        start_time: 2024-05-01
         end_time: 2024-05-31
         account: 100000000
         benchmark: *benchmark
@@ -82,7 +82,7 @@ task:
                 train: [2008-01-01, 2022-12-31]
                 valid: [2023-01-01, 2023-12-31]
                 test: [2024-01-01, 2024-05-31]
-            step_len: 20
+            step_len: 8
             market_data_handler_config: *market_data_handler_config
     record: 
         - class: SignalRecord
