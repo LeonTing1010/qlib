@@ -82,7 +82,7 @@ task:
                 train: [2008-01-01, 2022-12-31]
                 valid: [2023-01-01, 2023-12-31]
                 test: [2024-01-01, 2024-05-31]
-            step_len: 8
+            step_len: 6
             market_data_handler_config: *market_data_handler_config
     record: 
         - class: SignalRecord
